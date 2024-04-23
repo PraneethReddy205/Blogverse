@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<%- include("./partials/head.ejs") %>
+
+  <body>
+    <div id="booo">
+      <div class="Home-articles max-width1 m-auto">
+        <h1 class="font1 ">Search Results for <%= query %>
+        </h1>
+
+        <% if (blogs.length> 0) { %>
+          <% blogs.forEach(blog=> { %>
+
+            <div class="home-article max-width1 m-auto font1">
+              <div class="img">
+                <% if (blog.image && blog.image.data) { %>
+                  <img src="data:<%= blog.image.contentType %>;base64,<%= blog.image.data.toString('base64') %>"
+                    style="width:34vw">
+                  <% } %>
+              </div>
+
+              <div class="hcontent  font1">
+                <div class=" tr">
+                  <div>
+
+                    <img style="max-width: 10%; height: auto;  border-radius: 50%; " src="<%= blog.author.thumbnail %>"
+                      width="50%" height="50%" />
+                    <%= blog.author.username %>
+
+                  </div>
+                  <div class="flex padd6">
+                    <div class="padd-w">
+                      <% const words=blog.body.trim().split(/\s+/).length %>
+                        <% const readingTime=Math.ceil(words / 183) %>
+
+                          <%= readingTime %> min read
+                    </div>
+                    <div class="padd-w">
+                      <%= blog.createdAt.toDateString() %>
+                    </div>
+                    <div>
+                      <% if(blog.likes && blog.likes.length> 0) { %>
+
+                        <span id="likes-count" class="likes">
+                          <i class="bi bi-heart-fill"></i>
+                          <%= blog.likes.length %>
+                        </span>
+                        <% } else { %>
+                          <p>No likes yet.</p>
+                          <% } %>
+                    </div>
+                  </div>
+                </div>
+                <a class="hrrr" href="/home/<%=blog._id%>">
+                  <div class="title">
+                    <%= blog.title %>
+                  </div>
+                </a>
+                <p class="snippet">
+                  <%= blog.snippet %>
+                </p>
+              </div>
+            </div>
+            <% }) %>
+              <% } else { %>
+                <p>No results found...</p>
+                <% } %>
+      </div>
+
+    </div>
+    <div class="signin-box max-width2 m-auto" id="signin-bo">
+      <a class="btn home" onclick="outsid()"><img src="./images/g4.png" alt=""></a>
+      <div class="head font1 m-auto">
+        <h1 class="font1 heading1 max-width4">Welcome to Blogverse</h1>
+        <h1 class="font1 heading2 max-width3">Please Register</h1>
+        <button class="btn sign" onclick="location.href='/auth/google'"><img src="./images/google.png" alt="">continue
+          with google</button>
+      </div>
+    </div>
+    <div class="na">
+      <nav class="navigation max-width1 m-auto">
+        <div class="nav-left">
+          <span class="logo">BlogVerse</span>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/">About</a></li>
+            <li><a <% if (user) { %>href="/write"<% } else { %> onclick="signin()"<% } %> >Write</a></li>
+
+            <% if (user) { %>
+              <li style="padding-bottom: 2vw;padding-top: 2vw;"><a><i class="bi bi-person-lines-fill"></a></i></a>
+                <ul>
+                  <li>
+                    <div class="use">
+                      <% if (user) { %>
+                        <div class="f">
+                          <div class="thumb">
+                            <img style="width: 92%; height: auto;  border-radius: 50%; " src="<%= user.thumbnail %>" />
+                          </div>
+                          <div class="sidepadd">
+                            <h2 class="font1 fsize">
+                              <%= user.username%>
+                            </h2>
+
+                            <h5 class="font1 fsize">
+                              <%= user.mail %>
+                            </h5>
+                          </div>
+                        </div>
+                        <% } else { %>
+                          ,<h1>No User</h1>
+                          <% } %>
+
+
+                    </div>
+
+                    <hr>
+                  </li>
+                  <li><a href="" class="hree">
+                      <h1 class="fsize font2">Edit Profile</h1>
+                    </a>
+                    <hr>
+                  </li>
+                  <li> <a href="/myblogs" class="hree">
+                      <h1 class="fsize font2">My Blogs</h1>
+                    </a>
+                    <hr>
+                  </li>
+                  <li><a href="/readlater" class="hree">
+                      <h1 class="fsize font2">Marked for Readlater</h1>
+                    </a>
+                    <hr>
+                  </li>
+                  <li><a href="/auth/logout" class="hree">
+                      <h1 class="fsize font2">Logout</h1>
+                    </a>
+                    <hr>
+                  </li>
+                </ul>
+              </li>
+
+              <% } else { %>
+                <li><button class="btn signin font2" onclick="signin()">Login</button></li>
+                <% } %>
+
+          </ul>
+        </div>
+
+        <!-- search bar -->
+        <form action="/search" method="GET">
+          <div class="nav-right">
+            <input class="form-input" type="text" name="q" placeholder="Search for articles" required>
+            <button class="btn" type="submit"><i class="bi bi-search"
+                style="font-size: larger; font-weight: 900;"></i></button>
+          </div>
+        </form>
+      </nav>
+      <div class="max-width1 m-auto">
+        <hr>
+      </div>
+    </div>
+
+
+
+
+  </body>

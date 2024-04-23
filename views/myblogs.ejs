@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <%- include("./partials/head.ejs") %>
+  <body>
+   <div class="max-width1 m-auto"style="padding:9vw 0vw ;">
+
+  <h1>My Blogs</h1>
+<ul>
+    <% if (blogs.length > 0) { %>
+              <% blogs.forEach(blog => { %>
+                <div class="home-article max-width1 m-auto font1">
+                  <div class="img">
+                    <% if (blog.image && blog.image.data) { %>
+                      <img
+                        src="data:<%= blog.image.contentType %>;base64,<%= blog.image.data.toString('base64') %>" style="width:34vw" >
+                      <% } %>
+                  </div>
+
+                  <div class="hcontent  font1">
+                    <div class=" tr">
+                      <div>
+                        <%console.log(blog)%>
+                          <img style="max-width: 10%; height: auto;  border-radius: 50%; " src="<%= user.thumbnail %>"width="50%" height="50%" />
+                          <%= user.username %>
+    
+                      </div>
+                      <div class="flex padd6">
+                      <div class="padd-w">
+                        <% const words=blog.body.trim().split(/\s+/).length %>
+                        <% const readingTime=Math.ceil(words / 183) %>
+                          
+                            <%= readingTime %> min read
+                      </div>
+                      <div class="padd-w">
+                          <%= blog.createdAt.toDateString() %>
+                      </div>
+                      <div>
+                        <% if(blog.likes && blog.likes.length> 0) { %>
+                  
+                          <span id="likes-count" class="likes">
+                           <i class="bi bi-heart-fill" ></i>
+                             <%= blog.likes.length %>
+                           </span>
+                         <% } else { %>
+                           <p>No likes yet.</p>
+                           <% } %> 
+                      </div>
+                   </div>
+                  </div>
+                  <a class="hrrr" href="/myblogs/<%=blog._id%>">
+                    <div class="title">
+                      <%= blog.title %>
+                    </div>
+                  </a>
+                  <p class="snippet">
+                    <%= blog.snippet %>
+                  </p>
+                  
+                  
+
+                   
+                      
+              </div>
+            </div>
+              <% }) %>
+            <% } else { %>
+              <p>There are no blogs to display...</p>
+            <% } %> 
+  </ul>
+  <%- include("./partials/nav.ejs") %>
+</div>

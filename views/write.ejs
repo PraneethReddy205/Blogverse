@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <%- include("./partials/head.ejs") %>
+  <body>
+    <div class="boo" style="padding: 7vw 0vw;">
+    <div onclick="iii()">
+   
+    <div class="container max-width1 m-auto">
+      <h1>Compose</h1>
+        <form action="/home" method="POST" id="blog-form" enctype="multipart/form-data">
+          <input type="file" name="image" onchange="displayImage(this)" required>
+          <img id="selectedImage" width="60%"><br>
+          <label for="title"><h4>Blog title</h4></label>
+          <input type="text" id="title" name="title" class="form-control" required>
+          <label for="snippet"><h4>Blog snippet</h4></label>
+          <input type="text" id="snippet" name="snippet" class="form-control" required>
+          <label for="body"><h4>Blog body</h4></label>
+          <textarea id="body" name="body" class="form-control tinymice" rows="5" cols="30" ></textarea><br>
+          <label for="tags" >Tags</label>
+          <input class="form-control" name="tags" id="tags" type="text" >
+         <div style="padding: 2vw 0vw;">
+          <button type="submit" class="btn btn-primary">Publish</button>
+          <button id="generate-tags-btn" type="button" class="btn btn-primary" onclick="generateTags()">Generate tags</button>
+         </div>
+        </form>
+        <div class="flex padd19" id="tttt"style="visibility: hidden;">
+          <div class="tags"></div>
+          <div class="tags"></div>
+          <div class="tags"></div>
+        </div>
+    </div>
+    
+    <script>
+      document.getElementById("blog-form").addEventListener("submit", function(event) {
+  // Get the editor content
+  var content = tinymce.activeEditor.getContent();
+ 
+  // Check if the content is empty
+  if (!content.trim()) {
+    // Prevent the form from submitting
+    event.preventDefault();
+
+    // Show an error message
+    alert("Please enter some content for your blog post.");
+  }
+});
+    </script>
+  </div>
+  <div class="na">
+    <nav class="navigation max-width1 m-auto">
+      <div class="nav-left">
+        <span class="logo">BlogVerse</span>
+        <ul>
+          <li><a  href="/">Home</a></li>
+          <li><a href="/">About</a></li>
+          <li><a class="acti" <% if (user) { %>href="/write"<% } else { %> onclick="signin()"<% } %> >Write</a></li>
+  
+          <% if (user) { %>
+            <li style="padding-bottom: 2vw;padding-top: 2vw;"><a ><i class="bi bi-person-lines-fill"></a></i></a>
+              <ul>
+                <li>
+                    <div class="use">
+                      <% if (user) { %>
+                        <div class="f">
+                          <div class="thumb">
+                            <img style="width: 92%; height: auto;  border-radius: 50%; " src="<%= user.thumbnail %>" />
+                      </div>
+                      <div class="sidepadd">
+                        <h2 class="font1 fsize"><%= user.username%></h2>
+                      
+                        <h5 class="font1 fsize"><%= user.mail %></h5>
+                      </div>
+                      </div>
+                        <% } else { %>
+                           ,<h1>No User</h1>
+                        <% } %>
+                      
+                      
+                    </div>
+          
+                    <hr>
+                </li>
+                <li><a href="" class="hree">
+                        <h1 class="fsize font2">Edit Profile</h1>
+                    </a>
+                    <hr>
+                </li>
+                <li> <a href="/myblogs" class="hree">
+                        <h1 class="fsize font2">My Blogs</h1>
+                    </a>
+                    <hr>
+                </li>
+                <li><a href="/readlater" class="hree">
+                        <h1 class="fsize font2">Marked for Readlater</h1>
+                    </a>
+                    <hr>
+                </li>
+                <li><a href="/auth/logout" class="hree">
+                        <h1 class="fsize font2">Logout</h1>
+                    </a>
+                    <hr>
+                </li>
+            </ul>
+            </li>
+  
+            <% } else { %>
+              <li><button class="btn signin font2" onclick="signin()">Login</button></li>
+              <% } %>
+  
+        </ul>
+      </div>
+  
+    </nav>
+    <div class="max-width1 m-auto">
+      <hr>
+    </div>
+  </div>
+</div>
+    
+  </body>
+</html> 

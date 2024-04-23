@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <%- include("./partials/head.ejs") %>
+  <body>
+    <div class="boo" style="padding:9vw ;">
+      <div class="del">
+        <form action="/myblogs/<%=blog._id%>?_method=DELETE" method="POST">
+          <button class="btn btn-danger" type="submit">Delete</button>
+        </form>
+      </div>
+    <div class="img1"><% if (blog.image && blog.image.data) { %>
+        <img src="data:<%= blog.image.contentType %>;base64,<%= blog.image.data.toString('base64') %>" width="100%" >
+      <% } %></div>
+      <h3 class="title"><%= blog.title %></h3>
+      <p class="snippet"><%= blog.snippet %></p>
+
+      <!-- Delete blog form -->
+     
+
+      <!-- Edit blog form -->
+      <form action="/myblogs/<%= blog._id %>?_method=PUT" method="POST">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" class="form-control" id="title" name="title" value="<%= blog.title %>">
+          <label for="snippet"><h4>Blog snippet</h4></label>
+          <input type="text" id="snippet" name="snippet" class="form-control" value="<%=blog.snippet%>">
+        </div>
+        <div class="form-group">
+          <label for="body">Body</label>
+          <textarea class="form-control" id="body" name="body" rows="10"><%= blog.body %></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Edit</button>
+      </form>
+      <%- include("./partials/nav.ejs") %>
+    </div>
+  </body>

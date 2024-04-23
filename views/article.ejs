@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<%- include("./partials/head.ejs") %>
+  <body>
+    <div id="booo"style="
+    padding: 9vw;">
+    
+      <div class="padd2 max-width1 m-auto">
+        <div class=" tr">
+                        <!-- Delete blog form -->
+                        <%if(user){%>
+                        <%if(user.isAdmin){%>
+                          <form action="/home/<%=blog._id%>?_method=DELETE" method="POST">
+                            <button class="btn btn-danger" type="submit">Delete</button>
+                          </form>
+                          <%}}%>
+                        <div class="flex">
+                          <div class="flex">
+                            <img class="thumbnail" src="<%= blog.author.thumbnail %>" height="5%" />
+                          <div class="padd8 ">
+                            <div class="font-head f-size">
+                            <%= blog.author.username %>
+                          </div>
+                            <div class="flex f-size">
+                              <div class="padd7 ">
+                                <% const words=blog.body.trim().split(/\s+/).length %>
+                                <% const readingTime=Math.ceil(words / 183) %>
+                                  
+                                    <%= readingTime %> min read
+                              </div>
+                              <div class="padd7">
+                                  <%= blog.createdAt.toDateString() %>
+                              </div>
+                              <div class="col-md-6 like flex">
+                                <div>
+                                <a id="like-btn" class="likeit" onclick="handleLikeButtonClick('<%= blog._id %>')">
+                                  <% if (user) { %>
+                                    <% if (blog.likes && blog.likes.length > 0 && blog.likes.includes(user._id)) { %>
+                                      <i class="bi bi-heart-fill" style="color: red;"></i>
+                                    <% } else { %>
+                                      <i class="bi bi-heart"></i>
+                                    <% } %>
+                                  <% } else{%>
+                                    <i class="bi bi-heart"></i>
+                                    <%}%>
+                                </a>
+                              </div>
+                                <% if (blog.likes && blog.likes.length > 0) { %>
+                                  <div id="likes-count" class="like1"><%= blog.likes.length %></div>
+                                <% } else { %>
+                                  <p>No likes yet.</p>
+                                <% } %>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="bookmark">
+                          <%if(user){%> 
+                              <a id="read-later-btn" class="readltr" onclick="handleReadLaterButtonClick('<%= blog._id %>')">
+                                <%if(user){%>
+                                  <% if (user.readLater && user.readLater.includes(blog._id)) { %>
+                                    <i class="bi bi-bookmark-check-fill" ></i> 
+                                  <% } else { %>
+                                    <i class="bi bi-bookmark"></i> 
+                                  <% }} %>
+                                  </a>           
+                          <%}%>
+                    </div>
+                    
+
+                        </div>
+                        
+                     </div>
+        <div class="img">
+          <% if (blog.image && blog.image.data) { %>
+            <img src="data:<%= blog.image.contentType %>;base64,<%= blog.image.data.toString('base64') %>" width="100%">
+            <% } %>
+        </div>
+        <div class="padd2 f-title">
+          <div >
+            <%= blog.title %>
+          </div>
+        </div>
+        <div style="margin: -5vw 0vw">
+          <div class="font2" style="font-size: 1.4vw; white-space: pre-wrap;">
+            <p>
+              <%- blog.body %>
+            </p>
+          </div>
+        </div>
+        
+      </div>
+       <div>
+        <% if (blog.htags && blog.htags.length > 0) { %>
+          <div class="flex padd19">
+          <% blog.htags.forEach(htag => { %>
+          <%if(htag!="") {%>
+              <div class="tags"><%= htag %></div>
+          <%}%>
+        <% })%>
+    <%}%>
+    <% if (blog.mltags && blog.mltags.length > 0) { %>
+          <% blog.mltags.forEach(mtag => { %>
+          <div class="tags"><%= mtag %></div>
+        <% })}%>
+      </div> 
+       </div>
+      <div class="row max-width1 m-auto padd2">
+        
+      </div>
+      <div class="max-width1 m-auto"><hr></div>
+      <div class="max-width1 m-auto">
+        <h2>Comments:</h2>
+        <% if (user) { %>
+          <form action="/home/<%= blog._id %>/comment" method="POST">
+            <div class="flex">
+              <div class="">
+                <img style="width: 50%; height: auto;  border-radius: 50%; " src="<%= user.thumbnail %>" />
+          </div>
+            <div>
+              <textarea name="comment" id="comment" class="form-control" placeholder="Leave a comment"
+                required></textarea>
+              </div>
+              <div class="padd10">
+                <button type="submit" class="btn btn-primary">Post</button>
+              </div>
+
+            </div>
+            
+          </form>
+          <% } else { %>
+            <p>Please <a onclick="signin()">log in</a> to leave a comment or to like a post.</p>
+            <% } %>
+        <% if (blog.comments.length> 0) { %>
+          <% blog.comments.forEach(comment=> { %>
+            
+            <div class="comment flex paddin">
+              <div>
+                <img class="thumbnail1" src="<%= comment.author.thumbnail %>" />
+          </div>
+          <div>
+          <div class="flex">
+            <div>
+              <p><strong>
+                  <%= comment.author.username %>:
+                </strong>
+                </p>
+              </div>
+                <div>
+              <p>
+                <%= comment.createdAt.toDateString() %>
+              </p>
+              </div>
+            </div>
+            <div>
+              <%= comment.comment %>
+            </div>
+          </div>
+          </div>
+            <% }) %>
+              <% } else { %>
+                <p>No comments yet.</p>
+                <% } %>
+
+                  <!-- comment form -->
+                 
+      </div>
+    
+    <div class="na">
+      <nav class="navigation max-width1 m-auto">
+        <div class="nav-left">
+          <span class="logo">BlogVerse</span>
+          <ul>
+            <li><a  href="/">Home</a></li>
+            <li><a href="/">About</a></li>
+            <li><a <% if (user) { %>href="/write"<% } else { %> onclick="signin()"<% } %> >Write</a></li>
+
+            <% if (user) { %>
+              <li style="padding-bottom: 2vw;padding-top: 2vw;"><a ><i class="bi bi-person-lines-fill"></a></i></a>
+                <ul>
+                  <li>
+                      <div class="use">
+                        <% if (user) { %>
+                          <div class="f">
+                            <div class="thumb">
+                              <img style="width: 92%; height: auto;  border-radius: 50%; " src="<%= user.thumbnail %>" />
+                        </div>
+                        <div class="sidepadd">
+                          <h2 class="font1 fsize"><%= user.username%></h2>
+                        
+                          <h5 class="font1 fsize"><%= user.mail %></h5>
+                        </div>
+                        </div>
+                          <% } else { %>
+                             ,<h1>No User</h1>
+                          <% } %>
+                        
+                        
+                      </div>
+            
+                      <hr>
+                  </li>
+                  <li><a href="" class="hree">
+                          <h1 class="fsize font2">Edit Profile</h1>
+                      </a>
+                      <hr>
+                  </li>
+                  <li> <a href="/myblogs" class="hree">
+                          <h1 class="fsize font2">My Blogs</h1>
+                      </a>
+                      <hr>
+                  </li>
+                  <li><a href="/readlater" class="hree">
+                          <h1 class="fsize font2">Marked for Readlater</h1>
+                      </a>
+                      <hr>
+                  </li>
+                  <li><a href="/auth/logout" class="hree">
+                          <h1 class="fsize font2">Logout</h1>
+                      </a>
+                      <hr>
+                  </li>
+              </ul>
+              </li>
+
+              <% } else { %>
+                <li><button class="btn signin font2" onclick="signin()">Login</button></li>
+                <% } %>
+
+          </ul>
+        </div>
+
+        <!-- search bar -->
+        <form action="/search" method="GET">
+          <div class="nav-right">
+              <input class="form-input" type="text" name="q" placeholder="Search for articles" required>
+              <button class="btn" type="submit"><i class="bi bi-search" style="font-size: larger; font-weight: 900;"></i></button>
+          </div> 
+          </form>
+      </nav>
+      <div class="max-width1 m-auto">
+        <hr>
+      </div>
+    </div>
+  </div>
+  <div class="signin-box max-width2 m-auto" id="signin-bo">
+    <a class="btn home" onclick="outsid()" ><img src="/images/g4.png" alt=""></a>
+    <div class="head font1 m-auto">
+      <h1 class="font1 heading1 max-width4">Welcome to Blogverse</h1>
+      <h1 class="font1 heading2 max-width3">Please Register</h1>
+    <button class="btn sign" onclick="location.href='/auth/google'"><img src="/images/google.png" alt="">continue with google</button>
+    </div>
+    </div>
+  </body>
+
+</html>

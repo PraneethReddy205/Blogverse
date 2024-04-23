@@ -1,0 +1,77 @@
+
+<div class="na">
+  <nav class="navigation max-width1 m-auto">
+    <div class="nav-left">
+      <span class="logo">BlogVerse</span>
+      <ul>
+        <li><a  href="/">Home</a></li>
+        <li><a href="/">About</a></li>
+        <li><a <% if (user) { %>href="/write"<% } else { %> onclick="signin()"<% } %> >Write</a></li>
+
+        <% if (user) { %>
+          <li style="padding-bottom: 2vw;padding-top: 2vw;"><a ><i class="bi bi-person-lines-fill"></a></i></a>
+            <ul>
+              <li>
+                  <div class="use">
+                    <% if (user) { %>
+                      <div class="f">
+                        <div class="thumb">
+                          <img style="width: 92%; height: auto;  border-radius: 50%; " src="<%= user.thumbnail %>" />
+                    </div>
+                    <div class="sidepadd">
+                      <h2 class="font1 fsize"><%= user.username%></h2>
+                    
+                      <h5 class="font1 fsize"><%= user.mail %></h5>
+                    </div>
+                    </div>
+                      <% } else { %>
+                         ,<h1>No User</h1>
+                      <% } %>
+                    
+                    
+                  </div>
+        
+                  <hr>
+              </li>
+              <li><a href="" class="hree">
+                      <h1 class="fsize font2">Edit Profile</h1>
+                  </a>
+                  <hr>
+              </li>
+              <li> <a href="/myblogs" class="hree">
+                      <h1 class="fsize font2">My Blogs</h1>
+                  </a>
+                  <hr>
+              </li>
+              <li><a href="/readlater" class="hree">
+                      <h1 class="fsize font2">Marked for Readlater</h1>
+                  </a>
+                  <hr>
+              </li>
+              <li><a href="/auth/logout" class="hree">
+                      <h1 class="fsize font2">Logout</h1>
+                  </a>
+                  <hr>
+              </li>
+          </ul>
+          </li>
+
+          <% } else { %>
+            <li><button class="btn signin font2" onclick="signin()">Login</button></li>
+            <% } %>
+
+      </ul>
+    </div>
+
+    <!-- search bar -->
+    <form action="/search" method="GET">
+      <div class="nav-right">
+          <input class="form-input" type="text" name="q" placeholder="Search for articles" required>
+          <button class="btn" type="submit" ><i class="bi bi-search" style="font-size: larger; font-weight: 900;"></i></button>
+      </div> 
+      </form>
+  </nav>
+  <div class="max-width1 m-auto">
+    <hr>
+  </div>
+</div>

@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500&family=Roboto&display=swap');
+
+:root{
+    --font1:'Baloo 2', cursive;
+    --font2:'Roboto', sans-serif;
+}
+
+.max-width1{
+    max-width: 74vw;
+}
+.width1{
+    width: 74vw;
+}
+.max-width2{
+    max-width: 50vw;
+}
+.m-auto{
+    margin: auto;
+}
+.btn{
+    padding: 0.5vw 0.75vw;
+    border: 0.1vw solid;
+    border-radius: 0.75vw;
+    font-family: var(--font1);
+    font-size: 1vw;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+.btn:hover{
+    color: white;
+    background-color:#2C6344;
+}
+.form-input{
+    padding: 0.5vw 0.833vw;
+    font-size: 1vw;
+    border: 0.1vw solid;
+    border-radius: 1vw;
+    margin: 0 4vw;
+    font-family: var(--font1);
+}
+.font1{
+    font-family: var(--font1);
+}
+.font2{
+    font-family: var(--font2);
+}
+.hree {
+    text-decoration: none;
+    color: black;
+    left:69vw;
+}
+.hree:hover{
+    color:#BAB86C;
+    font-weight:bolder ;
+    cursor: pointer;
+
+}
+.fsize{
+    font-size: 0.8vw;
+
+}
+.fsize2{
+    font-size: 2vw;
+}
+.fsize1{
+    font-size: 1vw;
+}
+.xx{
+   cursor: pointer; 
+}
+.padd{
+    padding: 10vw 0vw;
+}
+.padd1{
+    padding: 50px;
+}
+.paddin{
+    padding: 1vw 0vw;
+}
+.padd2{
+    padding: 2vw 0vw;
+}
+.padd3{
+    padding: 3vw 0vw;
+}
+.padd4{
+    padding: 3vw 0vw;
+}
+.f{
+    display: flex;
+}
+.sidpadd{
+    padding: 0vw 1vw;;
+}
+.hrrr{
+    text-decoration: none;
+    color: black;
+    left:69vw;
+    font-size: 2.25621vw;
+    font-family:'Times New Roman', Times, serif;
+    font-weight: 900;
+
+}
+.hrrr:hover{
+    cursor: pointer;
+    text-decoration: none;
+
+}
